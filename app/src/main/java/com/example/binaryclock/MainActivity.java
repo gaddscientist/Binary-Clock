@@ -1,5 +1,6 @@
 package com.example.binaryclock;
 
+// Default imports
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,7 +10,14 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+// Additional imports
+import android.widget.Button;
+import android.widget.TextClock;
+import android.widget.TextView;
+
 public class MainActivity extends AppCompatActivity {
+    private TextView clockDisplay;
+    private TextClock textClock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +26,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        textClock = findViewById(R.id.textClock);
+        clockDisplay = findViewById(R.id.textView);
+
     }
 
     @Override
