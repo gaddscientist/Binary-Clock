@@ -20,9 +20,12 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
     private TextView clockDisplay;
     private TextClock textClock;
-    private String hour = "";
-    private String minute = "";
-    private String second = "";
+    private String hourTens;
+    private String hourOnes;
+    private String minuteTens;
+    private String minuteOnes;
+    private String secondTens;
+    private String secondOnes;
     private SimpleDateFormat hoursSdf = new SimpleDateFormat("hh");
     private SimpleDateFormat minutesSdf = new SimpleDateFormat("mm");
     private SimpleDateFormat secondsSdf = new SimpleDateFormat("ss");
@@ -41,20 +44,28 @@ public class MainActivity extends AppCompatActivity {
         textClock = findViewById(R.id.textClock);
         clockDisplay = findViewById(R.id.textView);
 
-        // Pulls the current hour, minute, and second from the simple date object as strings
-        hour = hoursSdf.format(currentTime.getTime());
-        minute = minutesSdf.format(currentTime.getTime());
-        second = secondsSdf.format(currentTime.getTime());
+
+        hourTens = decimalToBinary(Integer.toString(Integer.parseInt((hoursSdf.format(currentTime.getTime()))) / 10));
+        hourOnes = decimalToBinary(Integer.toString(Integer.parseInt((hoursSdf.format(currentTime.getTime()))) % 10));
+        minuteTens = decimalToBinary(Integer.toString(Integer.parseInt((minutesSdf.format(currentTime.getTime()))) / 10));
+        minuteOnes = decimalToBinary(Integer.toString(Integer.parseInt((minutesSdf.format(currentTime.getTime()))) % 10));
+        secondTens = decimalToBinary(Integer.toString(Integer.parseInt((secondsSdf.format(currentTime.getTime()))) / 10));
+        secondOnes = decimalToBinary(Integer.toString(Integer.parseInt((secondsSdf.format(currentTime.getTime()))) % 10));
+
+
+        // DELETE
+        printTest(hourTens);
+        printTest(hourOnes);
+        printTest(minuteTens);
+        printTest(minuteOnes);
+        printTest(secondTens);
+        printTest(secondOnes);
+
 
         int test = 171;
         // Sets the text view to the concatenation of the hour, minute, and second strings
         // clockDisplay.setText(hour + " " + minute + " " + second);
         clockDisplay.setText(decimalToBinary(Integer.toString(test)));
-
-
-        switch (hour) {
-
-        }
 
     }
 
@@ -81,22 +92,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // Function to convert a decimal number to a binary number
+    // Function to convert a decimal number to a 4 digit binary number
     private String decimalToBinary(String decimal) {
         String binary = "";
         int remainder;
         int dec = Integer.parseInt(decimal);
 
+        if (dec == 0) { return "0000";}
+
         while (dec != 0) {
-          remainder = 0;
           remainder = dec % 2;
           dec = dec / 2;
-          System.out.println("Remainder: " + remainder + " dec: " + dec);
-          binary = Integer.toString(remainder) + binary;
+          binary = remainder + binary;
+        }
+
+        while (binary.length() < 4) {
+            binary = "0" + binary;
         }
 
         return binary;
+    }
 
-
+    // DELETE
+    private void printTest(String string){
+        System.out.println("Binary String: " + string);
     }
 }
