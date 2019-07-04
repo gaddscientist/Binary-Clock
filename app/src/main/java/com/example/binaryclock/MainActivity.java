@@ -35,16 +35,26 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Pulls the current time
         currentTime = Calendar.getInstance().getTime();
+        // Assigns objects to their corresponding views
         textClock = findViewById(R.id.textClock);
         clockDisplay = findViewById(R.id.textView);
 
+        // Pulls the current hour, minute, and second from the simple date object as strings
         hour = hoursSdf.format(currentTime.getTime());
         minute = minutesSdf.format(currentTime.getTime());
         second = secondsSdf.format(currentTime.getTime());
 
-        clockDisplay.setText(hour + " " + minute + " " + second);
+        int test = 171;
+        // Sets the text view to the concatenation of the hour, minute, and second strings
+        // clockDisplay.setText(hour + " " + minute + " " + second);
+        clockDisplay.setText(decimalToBinary(Integer.toString(test)));
 
+
+        switch (hour) {
+
+        }
 
     }
 
@@ -68,5 +78,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    // Function to convert a decimal number to a binary number
+    private String decimalToBinary(String decimal) {
+        String binary = "";
+        int remainder;
+        int dec = Integer.parseInt(decimal);
+
+        while (dec != 0) {
+          remainder = 0;
+          remainder = dec % 2;
+          dec = dec / 2;
+          System.out.println("Remainder: " + remainder + " dec: " + dec);
+          binary = Integer.toString(remainder) + binary;
+        }
+
+        return binary;
+
+
     }
 }
