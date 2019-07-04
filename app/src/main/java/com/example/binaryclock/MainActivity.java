@@ -11,13 +11,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 // Additional imports
-import android.widget.Button;
 import android.widget.TextClock;
 import android.widget.TextView;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private TextView clockDisplay;
     private TextClock textClock;
+    private String hour = "";
+    private String minute = "";
+    private String second = "";
+    private SimpleDateFormat hoursSdf = new SimpleDateFormat("hh");
+    private SimpleDateFormat minutesSdf = new SimpleDateFormat("mm");
+    private SimpleDateFormat secondsSdf = new SimpleDateFormat("ss");
+    private Date currentTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +35,16 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        currentTime = Calendar.getInstance().getTime();
         textClock = findViewById(R.id.textClock);
         clockDisplay = findViewById(R.id.textView);
+
+        hour = hoursSdf.format(currentTime.getTime());
+        minute = minutesSdf.format(currentTime.getTime());
+        second = secondsSdf.format(currentTime.getTime());
+
+        clockDisplay.setText(hour + " " + minute + " " + second);
+
 
     }
 
