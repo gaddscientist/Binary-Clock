@@ -159,31 +159,16 @@
         app:layout_constraintStart_toEndOf="@+id/second_tens_2" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/hour_tens_3"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginBottom="8dp"
-        android:src="@color/colorRed"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/hour_tens_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/hour_ones_3"
         android:layout_width="54dp"
         android:layout_height="54dp"
-        android:layout_marginStart="6dp"
+        android:layout_marginStart="76dp"
         android:layout_marginBottom="8dp"
         android:src="@color/colorRed"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toTopOf="@+id/hour_ones_2"
-        app:layout_constraintStart_toEndOf="@+id/hour_tens_3" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/minute_tens_3"
