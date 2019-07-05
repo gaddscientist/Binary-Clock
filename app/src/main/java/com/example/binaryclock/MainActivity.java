@@ -16,32 +16,28 @@ import java.util.Calendar;
 import java.util.Date;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-// TODO: FORCE ORIENTATION
+// TODO: TextClock/DisplayClock variables may need to be moved for scope
 // TODO: Write @param/@return comments for functions
-// TODO: Move local variables to appropriate scopes
-// TODO: Comment new methods
+// TODO: Check SimpleDateFormat syntax warnings
 // TODO: Implement clock beneath binary clock
 // TODO: Sync clocks up better(slight delay)
+// TODO: Add user settings
 public class MainActivity extends AppCompatActivity implements Runnable {
 
+    // Creates a thread for the updater to run on
     Thread runner;
+    // Declares a Runnable() object to continuously update the time
     final Runnable updater = new Runnable() {
         @Override
+        // Dictates the method to be called on the running thread
         public void run() {
             update();
         }
     };
 
+    // Declares a Handler() to handle the updater Runnable() in the message queue
+    // When the updater Runnable() executes, its own run() method is started calling the update() method
     final Handler handler = new Handler();
-    private TextView clockDisplay;
-    private TextClock textClock;
-    private String hourTens, hourOnes, minuteTens, minuteOnes, secondTens, secondOnes;
-    private SimpleDateFormat hours12Sdf = new SimpleDateFormat("hh");
-    private SimpleDateFormat hours24Sdf = new SimpleDateFormat("HH");
-    private SimpleDateFormat minutesSdf = new SimpleDateFormat("mm");
-    private SimpleDateFormat secondsSdf = new SimpleDateFormat("ss");
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss");
-    private Date currentTime;
 
     // Hour circle object declarations
     private CircleImageView ht1, ht2, ho1, ho2, ho3, ho4;
@@ -59,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Digital clock variable declarations
+        TextView clockDisplay;
+        TextClock textClock;
 
         // Hour circle object instantiations
         ht1 = findViewById(R.id.hour_tens_1);
@@ -95,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         // Sets the text view to the timestamp when the app was opened
         //clockDisplay.setText(simpleDateFormat.format(currentTime.getTime()));
 
+        // Checks to ensure that the Runnable() object is not null and starts it if it is
         if (runner == null) {
             runner = new Thread(this);
             runner.start();
@@ -154,12 +154,10 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
         if (t >= 2) {
             ht2.setColorFilter(getResources().getColor(R.color.colorBlue));
-            //ht2.setImageResource(getResources().getColor(R.color.colorBlue));
         }
         else {
             ht2.setColorFilter(getResources().getColor(R.color.colorRed));
         }
-
         if (t == 1) {
             ht1.setColorFilter(getResources().getColor(R.color.colorBlue));
         }
@@ -175,7 +173,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         else {
             ho4.setColorFilter(getResources().getColor(R.color.colorRed));
         }
-
         if (o >= 4) {
             ho3.setColorFilter(getResources().getColor(R.color.colorBlue));
             o %= 4;
@@ -192,7 +189,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         }
         if (o >= 1) {
             ho1.setColorFilter(getResources().getColor(R.color.colorBlue));
-            o %= 1;
         }
         else {
             ho1.setColorFilter(getResources().getColor(R.color.colorRed));
@@ -206,11 +202,11 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         int o = Integer.parseInt(ones);
 
         if (t >= 4) {
-            mt1.setColorFilter(getResources().getColor(R.color.colorBlue));
+            mt3.setColorFilter(getResources().getColor(R.color.colorBlue));
             t %= 4;
         }
         else {
-            mt1.setColorFilter(getResources().getColor(R.color.colorRed));
+            mt3.setColorFilter(getResources().getColor(R.color.colorRed));
         }
         if (t >= 2) {
             mt2.setColorFilter(getResources().getColor(R.color.colorBlue));
@@ -219,10 +215,8 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         else {
             mt2.setColorFilter(getResources().getColor(R.color.colorRed));
         }
-
         if (t == 1) {
             mt1.setColorFilter(getResources().getColor(R.color.colorBlue));
-            t %= 1;
         }
         else {
             mt1.setColorFilter(getResources().getColor(R.color.colorRed));
@@ -253,7 +247,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         }
         if (o >= 1) {
             mo1.setColorFilter(getResources().getColor(R.color.colorBlue));
-            o %= 1;
         }
         else {
             mo1.setColorFilter(getResources().getColor(R.color.colorRed));
@@ -267,11 +260,11 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         int o = Integer.parseInt(ones);
 
         if (t >= 4) {
-            st1.setColorFilter(getResources().getColor(R.color.colorBlue));
+            st3.setColorFilter(getResources().getColor(R.color.colorBlue));
             t %= 4;
         }
         else {
-            st1.setColorFilter(getResources().getColor(R.color.colorRed));
+            st3.setColorFilter(getResources().getColor(R.color.colorRed));
         }
         if (t >= 2) {
             st2.setColorFilter(getResources().getColor(R.color.colorBlue));
@@ -280,10 +273,8 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         else {
             st2.setColorFilter(getResources().getColor(R.color.colorRed));
         }
-
         if (t == 1) {
             st1.setColorFilter(getResources().getColor(R.color.colorBlue));
-            t %= 1;
         }
         else {
             st1.setColorFilter(getResources().getColor(R.color.colorRed));
@@ -314,7 +305,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         }
         if (o >= 1) {
             so1.setColorFilter(getResources().getColor(R.color.colorBlue));
-            o %= 1;
         }
         else {
             so1.setColorFilter(getResources().getColor(R.color.colorRed));
@@ -322,6 +312,16 @@ public class MainActivity extends AppCompatActivity implements Runnable {
    }
 
    private void update() {
+
+       // Variable declarations for pulling current time info
+       String hourTens, hourOnes, minuteTens, minuteOnes, secondTens, secondOnes;
+       SimpleDateFormat hours12Sdf = new SimpleDateFormat("hh");
+       SimpleDateFormat hours24Sdf = new SimpleDateFormat("HH");
+       SimpleDateFormat minutesSdf = new SimpleDateFormat("mm");
+       SimpleDateFormat secondsSdf = new SimpleDateFormat("ss");
+       SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss");
+       Date currentTime;
+
        // Pulls the current time
        currentTime = Calendar.getInstance().getTime();
 
@@ -342,12 +342,15 @@ public class MainActivity extends AppCompatActivity implements Runnable {
        lightSeconds(secondTens, secondOnes);
    }
 
+   // Implementation of the run() method
+   // Thread.sleep is used to ensure it doesn't run more often than needed
    @Override
     public void run() {
         while (runner != null) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {}
+            // Sends the Runnable() updater to the message queue
             handler.post(updater);
         }
    }
