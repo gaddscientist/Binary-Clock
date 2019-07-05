@@ -16,12 +16,9 @@ import java.util.Calendar;
 import java.util.Date;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-// TODO: TextClock/DisplayClock variables may need to be moved for scope
-// TODO: Write @param/@return comments for functions
-// TODO: Check SimpleDateFormat syntax warnings
-// TODO: Implement clock beneath binary clock
-// TODO: Sync clocks up better(slight delay)
 // TODO: Add user settings
+// TODO: Allow for toggling digital clock
+// TODO: Remove reference clock from top
 public class MainActivity extends AppCompatActivity implements Runnable {
 
     // Creates a thread for the updater to run on
@@ -116,8 +113,11 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         return super.onOptionsItemSelected(item);
     }
 
-
-    // Function to convert a decimal number to a 4 digit binary number
+    /**
+     * Method to convert a decimal number to a 4 digit binary number
+     * @param decimal   the String to be converted
+     * @return  the converted binary string.
+     */
     private String decimalToBinary(String decimal) {
         String binary = "";
         int remainder;
@@ -139,7 +139,11 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         return binary;
     }
 
-    // Function to light the hours columns
+    /**
+     * Method to light the cirlces in the hours columns
+     * @param tens    the String in binary of the tens digit for the hour
+     * @param ones    the String in binary of the ones digit for the hour
+     */
    private void lightHours(String tens, String ones) {
         // Converts strings to ints
         int t = Integer.parseInt(tens);
@@ -188,7 +192,11 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         }
    }
 
-   // Function to light the minutes columns
+    /**
+     * Method to light the minutes columns
+     * @param tens    the String in binary of the tens digit for the minute
+     * @param ones    the String in binary of the ones digit for the minute
+     */
    private void lightMinutes(String tens, String ones) {
         // Converts strings to ints
         int t = Integer.parseInt(tens);
@@ -246,7 +254,11 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         }
    }
 
-   // Function to light the seconds columns
+    /**
+     * Method to light the seconds columns
+     * @param tens    the String in binary of the tens digit for the second
+     * @param ones    the String in binary of the ones digit for the second
+     */
    private void lightSeconds(String tens, String ones) {
         // Converts strings to ints
         int t = Integer.parseInt(tens);
@@ -304,6 +316,9 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         }
    }
 
+    /**
+     * Method to update the displayed digital and binary clocks
+     */
    private void update() {
 
        // Variable declarations for pulling current time info
@@ -353,8 +368,11 @@ public class MainActivity extends AppCompatActivity implements Runnable {
        lightSeconds(secondTens, secondOnes);
    }
 
-   // Implementation of the run() method
-   // Thread.sleep is used to ensure it doesn't run more often than needed
+
+    /**
+     * Implementation of the run() method
+     * Thread.sleep is used to ensure it doesn't run more often than needed
+     */
    @Override
     public void run() {
         while (runner != null) {
