@@ -9,14 +9,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 // Additional imports
+import android.view.View;
 import android.widget.TextClock;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-// TODO: Add user settings
+// TODO: Change app icon
+// TODO: Allow for 24 hour
 // TODO: Allow for toggling digital clock
 // TODO: Remove reference clock from top
 public class MainActivity extends AppCompatActivity implements Runnable {
@@ -104,11 +109,23 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        TextView hourToggle = (TextView) findViewById(R.id.hour);
+        TextView minuteToggle = (TextView) findViewById(R.id.minute);
+        TextView secondToggle = (TextView) findViewById(R.id.second);
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.toggle_digital_off) {
+//            return true;
+            hourToggle.setVisibility(View.GONE);
+            minuteToggle.setVisibility(View.GONE);
+            secondToggle.setVisibility(View.GONE);
         }
+        else if (id == R.id.toggle_digital_on) {
+            hourToggle.setVisibility(View.VISIBLE);
+            minuteToggle.setVisibility(View.VISIBLE);
+            secondToggle.setVisibility(View.VISIBLE);
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
