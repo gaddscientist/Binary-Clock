@@ -2,11 +2,8 @@ package com.example.binaryclock;
 
 // Default imports
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,10 +13,11 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 // TODO: FORCE ORIENTATION
+// TODO: Write @param/@return comments for functions
+// TODO: move local variables to appropriate scopes
 public class MainActivity extends AppCompatActivity {
     private TextView clockDisplay;
     private TextClock textClock;
@@ -36,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss");
     private Date currentTime;
 
+    // Hour circle object declarations
     private CircleImageView ht1;
     private CircleImageView ht2;
     private CircleImageView ho1;
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private CircleImageView ho3;
     private CircleImageView ho4;
 
+    // Minute circle object declarations
     private CircleImageView mt1;
     private CircleImageView mt2;
     private CircleImageView mt3;
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private CircleImageView mo3;
     private CircleImageView mo4;
 
+    // Second circle object declarations
     private CircleImageView st1;
     private CircleImageView st2;
     private CircleImageView st3;
@@ -66,36 +67,42 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       ht1 = findViewById(R.id.hour_tens_1);
-       ht2 = findViewById(R.id.hour_tens_2);
-       ho1 = findViewById(R.id.hour_ones_1);
-       ho2 = findViewById(R.id.hour_ones_2);
-       ho3 = findViewById(R.id.hour_ones_3);
-       ho4 = findViewById(R.id.hour_ones_4);
 
-       mt1 = findViewById(R.id.minute_tens_1);
-       mt2 = findViewById(R.id.minute_tens_2);
-       mt3 = findViewById(R.id.minute_tens_3);
-       mo1 = findViewById(R.id.minute_ones_1);
-       mo2 = findViewById(R.id.minute_ones_2);
-       mo3 = findViewById(R.id.minute_ones_3);
-       mo4 = findViewById(R.id.minute_ones_4);
+        // Hour circle object instantiations
+        ht1 = findViewById(R.id.hour_tens_1);
+        ht2 = findViewById(R.id.hour_tens_2);
+        ho1 = findViewById(R.id.hour_ones_1);
+        ho2 = findViewById(R.id.hour_ones_2);
+        ho3 = findViewById(R.id.hour_ones_3);
+        ho4 = findViewById(R.id.hour_ones_4);
 
-       st1 = findViewById(R.id.second_tens_1);
-       st2 = findViewById(R.id.second_tens_2);
-       st3 = findViewById(R.id.second_tens_3);
-       so1 = findViewById(R.id.second_ones_1);
-       so2 = findViewById(R.id.second_ones_2);
-       so3 = findViewById(R.id.second_ones_3);
-       so4 = findViewById(R.id.second_ones_4);
+        // Minute circle object instantiations
+        mt1 = findViewById(R.id.minute_tens_1);
+        mt2 = findViewById(R.id.minute_tens_2);
+        mt3 = findViewById(R.id.minute_tens_3);
+        mo1 = findViewById(R.id.minute_ones_1);
+        mo2 = findViewById(R.id.minute_ones_2);
+        mo3 = findViewById(R.id.minute_ones_3);
+        mo4 = findViewById(R.id.minute_ones_4);
+
+        // Second circle object instantiations
+        st1 = findViewById(R.id.second_tens_1);
+        st2 = findViewById(R.id.second_tens_2);
+        st3 = findViewById(R.id.second_tens_3);
+        so1 = findViewById(R.id.second_ones_1);
+        so2 = findViewById(R.id.second_ones_2);
+        so3 = findViewById(R.id.second_ones_3);
+        so4 = findViewById(R.id.second_ones_4);
 
         // Pulls the current time
         currentTime = Calendar.getInstance().getTime();
+
         // Assigns objects to their corresponding views
         textClock = findViewById(R.id.textClock);
         clockDisplay = findViewById(R.id.textView);
 
         // TODO: ADD 24 HOUR FUNCTIONALITY
+        // Pulls each digit from the current hour, minute, and second as integers
         hourTens = Integer.toString(Integer.parseInt((hours12Sdf.format(currentTime.getTime()))) / 10);
         hourOnes = Integer.toString(Integer.parseInt((hours12Sdf.format(currentTime.getTime()))) % 10);
         minuteTens = Integer.toString(Integer.parseInt((minutesSdf.format(currentTime.getTime()))) / 10);
@@ -103,29 +110,10 @@ public class MainActivity extends AppCompatActivity {
         secondTens = Integer.toString(Integer.parseInt((secondsSdf.format(currentTime.getTime()))) / 10);
         secondOnes = Integer.toString(Integer.parseInt((secondsSdf.format(currentTime.getTime()))) % 10);
 
+        // Calls function to light the appropriate circles
         lightHours(hourTens, hourOnes);
         lightMinutes(minuteTens, minuteOnes);
         lightSeconds(secondTens, secondOnes);
-
-
-        /**
-        // TODO: ADD 24 HOUR FUNCTIONALITY
-        hourTens = decimalToBinary(Integer.toString(Integer.parseInt((hours12Sdf.format(currentTime.getTime()))) / 10));
-        hourOnes = decimalToBinary(Integer.toString(Integer.parseInt((hours12Sdf.format(currentTime.getTime()))) % 10));
-        minuteTens = decimalToBinary(Integer.toString(Integer.parseInt((minutesSdf.format(currentTime.getTime()))) / 10));
-        minuteOnes = decimalToBinary(Integer.toString(Integer.parseInt((minutesSdf.format(currentTime.getTime()))) % 10));
-        secondTens = decimalToBinary(Integer.toString(Integer.parseInt((secondsSdf.format(currentTime.getTime()))) / 10));
-        secondOnes = decimalToBinary(Integer.toString(Integer.parseInt((secondsSdf.format(currentTime.getTime()))) % 10));
-
-
-        // DELETE
-        printTest(hourTens);
-        printTest(hourOnes);
-        printTest(minuteTens);
-        printTest(minuteOnes);
-        printTest(secondTens);
-        printTest(secondOnes);
-        */
 
         // Sets the text view to the timestamp when the app was opened
         clockDisplay.setText(simpleDateFormat.format(currentTime.getTime()));
@@ -177,15 +165,12 @@ public class MainActivity extends AppCompatActivity {
         return binary;
     }
 
-    // DELETE
-    private void printTest(String string){
-        System.out.println("Binary String: " + string);
-    }
-
-
+    // Function to light the hours columns
    private void lightHours(String tens, String ones) {
+        // Converts strings to ints
         int t = Integer.parseInt(tens);
         int o = Integer.parseInt(ones);
+
         if (t >= 2) {
             ht2.setColorFilter(getResources().getColor(R.color.colorBlue));
             //ht2.setImageResource(getResources().getColor(R.color.colorBlue));
@@ -231,12 +216,14 @@ public class MainActivity extends AppCompatActivity {
         else {
             ho1.setColorFilter(getResources().getColor(R.color.colorRed));
         }
-
    }
 
+   // Function to light the minutes columns
    private void lightMinutes(String tens, String ones) {
+        // Converts strings to ints
         int t = Integer.parseInt(tens);
         int o = Integer.parseInt(ones);
+
         if (t >= 4) {
             mt1.setColorFilter(getResources().getColor(R.color.colorBlue));
             t %= 4;
@@ -290,13 +277,14 @@ public class MainActivity extends AppCompatActivity {
         else {
             mo1.setColorFilter(getResources().getColor(R.color.colorRed));
         }
-
-
    }
 
+   // Function to light the seconds columns
    private void lightSeconds(String tens, String ones) {
+        // Converts strings to ints
         int t = Integer.parseInt(tens);
         int o = Integer.parseInt(ones);
+
         if (t >= 4) {
             st1.setColorFilter(getResources().getColor(R.color.colorBlue));
             t %= 4;
