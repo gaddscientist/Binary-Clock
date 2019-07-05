@@ -150,45 +150,45 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         int o = Integer.parseInt(ones);
 
         if (t >= 2) {
-            ht2.setColorFilter(getResources().getColor(R.color.colorBlue));
-        }
-        else {
             ht2.setColorFilter(getResources().getColor(R.color.colorRed));
         }
+        else {
+            ht2.setColorFilter(getResources().getColor(R.color.blank));
+        }
         if (t == 1) {
-            ht1.setColorFilter(getResources().getColor(R.color.colorBlue));
+            ht1.setColorFilter(getResources().getColor(R.color.colorRed));
         }
         else {
-            ht1.setColorFilter(getResources().getColor(R.color.colorRed));
+            ht1.setColorFilter(getResources().getColor(R.color.blank));
         }
 
 
         if (o >= 8) {
-            ho4.setColorFilter(getResources().getColor(R.color.colorBlue));
+            ho4.setColorFilter(getResources().getColor(R.color.colorRed));
             o %= 8;
         }
         else {
-            ho4.setColorFilter(getResources().getColor(R.color.colorRed));
+            ho4.setColorFilter(getResources().getColor(R.color.blank));
         }
         if (o >= 4) {
-            ho3.setColorFilter(getResources().getColor(R.color.colorBlue));
+            ho3.setColorFilter(getResources().getColor(R.color.colorRed));
             o %= 4;
         }
         else {
-            ho3.setColorFilter(getResources().getColor(R.color.colorRed));
+            ho3.setColorFilter(getResources().getColor(R.color.blank));
         }
         if (o >= 2) {
-            ho2.setColorFilter(getResources().getColor(R.color.colorBlue));
+            ho2.setColorFilter(getResources().getColor(R.color.colorRed));
             o %= 2;
         }
         else {
-            ho2.setColorFilter(getResources().getColor(R.color.colorRed));
+            ho2.setColorFilter(getResources().getColor(R.color.blank));
         }
         if (o >= 1) {
-            ho1.setColorFilter(getResources().getColor(R.color.colorBlue));
+            ho1.setColorFilter(getResources().getColor(R.color.colorRed));
         }
         else {
-            ho1.setColorFilter(getResources().getColor(R.color.colorRed));
+            ho1.setColorFilter(getResources().getColor(R.color.blank));
         }
    }
 
@@ -207,20 +207,20 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             t %= 4;
         }
         else {
-            mt3.setColorFilter(getResources().getColor(R.color.colorRed));
+            mt3.setColorFilter(getResources().getColor(R.color.blank));
         }
         if (t >= 2) {
             mt2.setColorFilter(getResources().getColor(R.color.colorBlue));
             t %= 2;
         }
         else {
-            mt2.setColorFilter(getResources().getColor(R.color.colorRed));
+            mt2.setColorFilter(getResources().getColor(R.color.blank));
         }
         if (t == 1) {
             mt1.setColorFilter(getResources().getColor(R.color.colorBlue));
         }
         else {
-            mt1.setColorFilter(getResources().getColor(R.color.colorRed));
+            mt1.setColorFilter(getResources().getColor(R.color.blank));
         }
 
 
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             o %= 8;
         }
         else {
-            mo4.setColorFilter(getResources().getColor(R.color.colorRed));
+            mo4.setColorFilter(getResources().getColor(R.color.blank));
         }
 
         if (o >= 4) {
@@ -237,20 +237,20 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             o %= 4;
         }
         else {
-            mo3.setColorFilter(getResources().getColor(R.color.colorRed));
+            mo3.setColorFilter(getResources().getColor(R.color.blank));
         }
         if (o >= 2) {
             mo2.setColorFilter(getResources().getColor(R.color.colorBlue));
             o %= 2;
         }
         else {
-            mo2.setColorFilter(getResources().getColor(R.color.colorRed));
+            mo2.setColorFilter(getResources().getColor(R.color.blank));
         }
         if (o >= 1) {
             mo1.setColorFilter(getResources().getColor(R.color.colorBlue));
         }
         else {
-            mo1.setColorFilter(getResources().getColor(R.color.colorRed));
+            mo1.setColorFilter(getResources().getColor(R.color.blank));
         }
    }
 
@@ -265,54 +265,54 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         int o = Integer.parseInt(ones);
 
         if (t >= 4) {
-            st3.setColorFilter(getResources().getColor(R.color.colorBlue));
+            st3.setColorFilter(getResources().getColor(R.color.colorGreen));
             t %= 4;
         }
         else {
-            st3.setColorFilter(getResources().getColor(R.color.colorRed));
+            st3.setColorFilter(getResources().getColor(R.color.blank));
         }
         if (t >= 2) {
-            st2.setColorFilter(getResources().getColor(R.color.colorBlue));
+            st2.setColorFilter(getResources().getColor(R.color.colorGreen));
             t %= 2;
         }
         else {
-            st2.setColorFilter(getResources().getColor(R.color.colorRed));
+            st2.setColorFilter(getResources().getColor(R.color.blank));
         }
         if (t == 1) {
-            st1.setColorFilter(getResources().getColor(R.color.colorBlue));
+            st1.setColorFilter(getResources().getColor(R.color.colorGreen));
         }
         else {
-            st1.setColorFilter(getResources().getColor(R.color.colorRed));
+            st1.setColorFilter(getResources().getColor(R.color.blank));
         }
 
 
         if (o >= 8) {
-            so4.setColorFilter(getResources().getColor(R.color.colorBlue));
+            so4.setColorFilter(getResources().getColor(R.color.colorGreen));
             o %= 8;
         }
         else {
-            so4.setColorFilter(getResources().getColor(R.color.colorRed));
+            so4.setColorFilter(getResources().getColor(R.color.blank));
         }
 
         if (o >= 4) {
-            so3.setColorFilter(getResources().getColor(R.color.colorBlue));
+            so3.setColorFilter(getResources().getColor(R.color.colorGreen));
             o %= 4;
         }
         else {
-            so3.setColorFilter(getResources().getColor(R.color.colorRed));
+            so3.setColorFilter(getResources().getColor(R.color.blank));
         }
         if (o >= 2) {
-            so2.setColorFilter(getResources().getColor(R.color.colorBlue));
+            so2.setColorFilter(getResources().getColor(R.color.colorGreen));
             o %= 2;
         }
         else {
-            so2.setColorFilter(getResources().getColor(R.color.colorRed));
+            so2.setColorFilter(getResources().getColor(R.color.blank));
         }
         if (o >= 1) {
-            so1.setColorFilter(getResources().getColor(R.color.colorBlue));
+            so1.setColorFilter(getResources().getColor(R.color.colorGreen));
         }
         else {
-            so1.setColorFilter(getResources().getColor(R.color.colorRed));
+            so1.setColorFilter(getResources().getColor(R.color.blank));
         }
    }
 
