@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         }
     };
 
+    // Global boolean to store whether the digital clock is displayed
+    boolean toggle;
+
     // Declares a Handler() to handle the updater Runnable() in the message queue
     // When the updater Runnable() executes, its own run() method is started calling the update() method
     final Handler handler = new Handler();
@@ -104,28 +107,41 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Instantiates MenuItems to corresponding settings items
+        MenuItem off = menu.findItem(R.id.toggle_digital_off);
+        MenuItem on = menu.findItem(R.id.toggle_digital_on);
+
+        // Sets visibility of menu items based on boolean toggle
+        on.setVisible(toggle);
+        off.setVisible(!toggle);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         TextView hourToggle = (TextView) findViewById(R.id.hour);
         TextView minuteToggle = (TextView) findViewById(R.id.minute);
         TextView secondToggle = (TextView) findViewById(R.id.second);
 
-        //noinspection SimplifiableIfStatement
+        // If toggle off is pressed, textview visibility is hidden
         if (id == R.id.toggle_digital_off) {
-//            return true;
             hourToggle.setVisibility(View.GONE);
             minuteToggle.setVisibility(View.GONE);
             secondToggle.setVisibility(View.GONE);
+            toggle = true;
+            invalidateOptionsMenu();
         }
+        // If toggle on is pressed, textview visibility is shown
         else if (id == R.id.toggle_digital_on) {
             hourToggle.setVisibility(View.VISIBLE);
             minuteToggle.setVisibility(View.VISIBLE);
             secondToggle.setVisibility(View.VISIBLE);
+            toggle = false;
+            invalidateOptionsMenu();
         }
-
 
         return super.onOptionsItemSelected(item);
     }
