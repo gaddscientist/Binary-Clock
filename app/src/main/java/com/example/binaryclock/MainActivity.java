@@ -2,6 +2,7 @@ package com.example.binaryclock;
 
 // Default imports
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,16 +18,24 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 // TODO: FORCE ORIENTATION
 // TODO: Write @param/@return comments for functions
-// TODO: move local variables to appropriate scopes
-public class MainActivity extends AppCompatActivity {
+// TODO: Move local variables to appropriate scopes
+// TODO: Comment new methods
+// TODO: Implement clock beneath binary clock
+// TODO: Sync clocks up better(slight delay)
+public class MainActivity extends AppCompatActivity implements Runnable {
+
+    Thread runner;
+    final Runnable updater = new Runnable() {
+        @Override
+        public void run() {
+            update();
+        }
+    };
+
+    final Handler handler = new Handler();
     private TextView clockDisplay;
     private TextClock textClock;
-    private String hourTens;
-    private String hourOnes;
-    private String minuteTens;
-    private String minuteOnes;
-    private String secondTens;
-    private String secondOnes;
+    private String hourTens, hourOnes, minuteTens, minuteOnes, secondTens, secondOnes;
     private SimpleDateFormat hours12Sdf = new SimpleDateFormat("hh");
     private SimpleDateFormat hours24Sdf = new SimpleDateFormat("HH");
     private SimpleDateFormat minutesSdf = new SimpleDateFormat("mm");
@@ -35,30 +44,13 @@ public class MainActivity extends AppCompatActivity {
     private Date currentTime;
 
     // Hour circle object declarations
-    private CircleImageView ht1;
-    private CircleImageView ht2;
-    private CircleImageView ho1;
-    private CircleImageView ho2;
-    private CircleImageView ho3;
-    private CircleImageView ho4;
+    private CircleImageView ht1, ht2, ho1, ho2, ho3, ho4;
 
     // Minute circle object declarations
-    private CircleImageView mt1;
-    private CircleImageView mt2;
-    private CircleImageView mt3;
-    private CircleImageView mo1;
-    private CircleImageView mo2;
-    private CircleImageView mo3;
-    private CircleImageView mo4;
+    private CircleImageView mt1, mt2, mt3, mo1, mo2, mo3, mo4;
 
     // Second circle object declarations
-    private CircleImageView st1;
-    private CircleImageView st2;
-    private CircleImageView st3;
-    private CircleImageView so1;
-    private CircleImageView so2;
-    private CircleImageView so3;
-    private CircleImageView so4;
+    private CircleImageView st1, st2, st3, so1, so2, so3, so4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,30 +86,19 @@ public class MainActivity extends AppCompatActivity {
         so3 = findViewById(R.id.second_ones_3);
         so4 = findViewById(R.id.second_ones_4);
 
-        // Pulls the current time
-        currentTime = Calendar.getInstance().getTime();
 
         // Assigns objects to their corresponding views
         textClock = findViewById(R.id.textClock);
         clockDisplay = findViewById(R.id.textView);
 
-        // TODO: ADD 24 HOUR FUNCTIONALITY
-        // Pulls each digit from the current hour, minute, and second as integers
-        hourTens = Integer.toString(Integer.parseInt((hours12Sdf.format(currentTime.getTime()))) / 10);
-        hourOnes = Integer.toString(Integer.parseInt((hours12Sdf.format(currentTime.getTime()))) % 10);
-        minuteTens = Integer.toString(Integer.parseInt((minutesSdf.format(currentTime.getTime()))) / 10);
-        minuteOnes = Integer.toString(Integer.parseInt((minutesSdf.format(currentTime.getTime()))) % 10);
-        secondTens = Integer.toString(Integer.parseInt((secondsSdf.format(currentTime.getTime()))) / 10);
-        secondOnes = Integer.toString(Integer.parseInt((secondsSdf.format(currentTime.getTime()))) % 10);
-
-        // Calls function to light the appropriate circles
-        lightHours(hourTens, hourOnes);
-        lightMinutes(minuteTens, minuteOnes);
-        lightSeconds(secondTens, secondOnes);
-
+        // TODO: Do something with these lines
         // Sets the text view to the timestamp when the app was opened
-        clockDisplay.setText(simpleDateFormat.format(currentTime.getTime()));
+        //clockDisplay.setText(simpleDateFormat.format(currentTime.getTime()));
 
+        if (runner == null) {
+            runner = new Thread(this);
+            runner.start();
+        }
     }
 
     @Override
@@ -337,6 +318,37 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             so1.setColorFilter(getResources().getColor(R.color.colorRed));
+        }
+   }
+
+   private void update() {
+       // Pulls the current time
+       currentTime = Calendar.getInstance().getTime();
+
+       // TODO: Clock set texts
+
+       // TODO: ADD 24 HOUR FUNCTIONALITY
+       // Pulls each digit from the current hour, minute, and second as integers
+       hourTens = Integer.toString(Integer.parseInt((hours12Sdf.format(currentTime.getTime()))) / 10);
+       hourOnes = Integer.toString(Integer.parseInt((hours12Sdf.format(currentTime.getTime()))) % 10);
+       minuteTens = Integer.toString(Integer.parseInt((minutesSdf.format(currentTime.getTime()))) / 10);
+       minuteOnes = Integer.toString(Integer.parseInt((minutesSdf.format(currentTime.getTime()))) % 10);
+       secondTens = Integer.toString(Integer.parseInt((secondsSdf.format(currentTime.getTime()))) / 10);
+       secondOnes = Integer.toString(Integer.parseInt((secondsSdf.format(currentTime.getTime()))) % 10);
+
+       // Calls function to light the appropriate circles
+       lightHours(hourTens, hourOnes);
+       lightMinutes(minuteTens, minuteOnes);
+       lightSeconds(secondTens, secondOnes);
+   }
+
+   @Override
+    public void run() {
+        while (runner != null) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {}
+            handler.post(updater);
         }
    }
 }
