@@ -281,23 +281,19 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="225dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:id="@+id/hour"
+        android:layout_width="116dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="42dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="example"
-        android:textSize="30sp"
+        android:gravity="center_horizontal|top"
+        android:text="00:"
+        android:textSize="75sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.764" />
+        app:layout_constraintVertical_bias="0.765" />
 
     <TextClock
         android:id="@+id/textClock"
@@ -315,6 +311,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.05" />
+
+    <TextView
+        android:id="@+id/minute"
+        android:layout_width="116dp"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="00:"
+        android:textSize="75sp"
+        app:layout_constraintBottom_toBottomOf="@+id/hour"
+        app:layout_constraintStart_toEndOf="@+id/hour"
+        app:layout_constraintTop_toTopOf="@+id/hour" />
+
+    <TextView
+        android:id="@+id/second"
+        android:layout_width="116dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="00"
+        android:textSize="75sp"
+        app:layout_constraintBottom_toBottomOf="@+id/minute"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/minute"
+        app:layout_constraintTop_toTopOf="@+id/minute" />
 
 
 </android.support.constraint.ConstraintLayout>

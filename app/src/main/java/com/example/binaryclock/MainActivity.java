@@ -55,9 +55,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Digital clock variable declarations
-        TextView clockDisplay;
-        TextClock textClock;
 
         // Hour circle object instantiations
         ht1 = findViewById(R.id.hour_tens_1);
@@ -86,13 +83,9 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         so4 = findViewById(R.id.second_ones_4);
 
 
-        // Assigns objects to their corresponding views
-        textClock = findViewById(R.id.textClock);
-        clockDisplay = findViewById(R.id.textView);
+        // Calls update() method to correct 1000ms delay on display
+        update();
 
-        // TODO: Do something with these lines
-        // Sets the text view to the timestamp when the app was opened
-        //clockDisplay.setText(simpleDateFormat.format(currentTime.getTime()));
 
         // Checks to ensure that the Runnable() object is not null and starts it if it is
         if (runner == null) {
@@ -319,8 +312,15 @@ public class MainActivity extends AppCompatActivity implements Runnable {
        SimpleDateFormat hours24Sdf = new SimpleDateFormat("HH");
        SimpleDateFormat minutesSdf = new SimpleDateFormat("mm");
        SimpleDateFormat secondsSdf = new SimpleDateFormat("ss");
+       // TODO: Delete following line. Not used(probably)
        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss");
        Date currentTime;
+
+       // Digital clock variable declarations
+       TextView digitalHour;
+       TextView digitalMinute;
+       TextView digitalSecond;
+       TextClock textClock;
 
        // Pulls the current time
        currentTime = Calendar.getInstance().getTime();
@@ -335,6 +335,17 @@ public class MainActivity extends AppCompatActivity implements Runnable {
        minuteOnes = Integer.toString(Integer.parseInt((minutesSdf.format(currentTime.getTime()))) % 10);
        secondTens = Integer.toString(Integer.parseInt((secondsSdf.format(currentTime.getTime()))) / 10);
        secondOnes = Integer.toString(Integer.parseInt((secondsSdf.format(currentTime.getTime()))) % 10);
+
+        // Updates objects to their corresponding views
+        textClock = findViewById(R.id.textClock);
+        digitalHour = findViewById(R.id.hour);
+        digitalMinute = findViewById(R.id.minute);
+        digitalSecond = findViewById(R.id.second);
+
+        // Sets the digital clock text views
+        digitalHour.setText(hours12Sdf.format(currentTime.getTime()) + ":");
+        digitalMinute.setText(minutesSdf.format(currentTime.getTime()) + ":");
+        digitalSecond.setText(secondsSdf.format(currentTime.getTime()) + " ");
 
        // Calls function to light the appropriate circles
        lightHours(hourTens, hourOnes);
