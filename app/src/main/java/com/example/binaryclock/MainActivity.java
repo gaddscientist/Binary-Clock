@@ -10,15 +10,12 @@ import android.view.MenuItem;
 
 // Additional imports
 import android.view.View;
-import android.widget.TextClock;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-// TODO: Change app icon
-// TODO: Remove reference clock from top
 public class MainActivity extends AppCompatActivity implements Runnable {
 
     // Creates a thread for the updater to run on
@@ -356,8 +353,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
        // Pulls the current time
        currentTime = Calendar.getInstance().getTime();
-
-       // TODO: Clock set texts
 
        // Pulls each digit from the current hour, minute, and second as integers
        // Checks the clock format before pulling the hour integer
