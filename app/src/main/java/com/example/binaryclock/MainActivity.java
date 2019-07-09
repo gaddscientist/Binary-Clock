@@ -12,17 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextClock;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 // TODO: Change app icon
-// TODO: Allow for 24 hour
-// TODO: Allow for toggling digital clock
 // TODO: Remove reference clock from top
 public class MainActivity extends AppCompatActivity implements Runnable {
 
@@ -37,8 +32,9 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         }
     };
 
-    // Global boolean to store whether the digital clock is displayed
-    boolean toggle;
+    // Global boolean to store whether the digital clock is displayed and in what format
+    boolean digitalToggle;
+    boolean formatToggle;
 
     // Declares a Handler() to handle the updater Runnable() in the message queue
     // When the updater Runnable() executes, its own run() method is started calling the update() method
@@ -111,10 +107,14 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         // Instantiates MenuItems to corresponding settings items
         MenuItem off = menu.findItem(R.id.toggle_digital_off);
         MenuItem on = menu.findItem(R.id.toggle_digital_on);
+        MenuItem twelve = menu.findItem(R.id.toggle_12);
+        MenuItem twentyFour = menu.findItem(R.id.toggle_24);
 
-        // Sets visibility of menu items based on boolean toggle
-        on.setVisible(toggle);
-        off.setVisible(!toggle);
+        // Sets visibility of menu items based on toggle booleans
+        on.setVisible(digitalToggle);
+        off.setVisible(!digitalToggle);
+        twelve.setVisible(formatToggle);
+        twentyFour.setVisible(!formatToggle);
         return true;
     }
 
@@ -122,55 +122,42 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         int id = item.getItemId();
-        TextView hourToggle = (TextView) findViewById(R.id.hour);
-        TextView minuteToggle = (TextView) findViewById(R.id.minute);
-        TextView secondToggle = (TextView) findViewById(R.id.second);
+        TextView hourToggle = findViewById(R.id.hour);
+        TextView minuteToggle = findViewById(R.id.minute);
+        TextView secondToggle = findViewById(R.id.second);
 
-        // If toggle off is pressed, textview visibility is hidden
+        // If toggle_digital_off is pressed, textview visibility is hidden
         if (id == R.id.toggle_digital_off) {
             hourToggle.setVisibility(View.GONE);
             minuteToggle.setVisibility(View.GONE);
             secondToggle.setVisibility(View.GONE);
-            toggle = true;
+            digitalToggle = true;
             invalidateOptionsMenu();
         }
-        // If toggle on is pressed, textview visibility is shown
+        // If toggle_digital_on is pressed, textview visibility is shown
         else if (id == R.id.toggle_digital_on) {
             hourToggle.setVisibility(View.VISIBLE);
             minuteToggle.setVisibility(View.VISIBLE);
             secondToggle.setVisibility(View.VISIBLE);
-            toggle = false;
+            digitalToggle = false;
+            invalidateOptionsMenu();
+        }
+
+        // If toggle_12 is pressed, the clock format is switched
+        else if (id == R.id.toggle_12) {
+            formatToggle = false;
+            invalidateOptionsMenu();
+        }
+
+        // If toggle_24 is pressed, the clock format is switched
+        else if (id == R.id.toggle_24) {
+            formatToggle = true;
             invalidateOptionsMenu();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Method to convert a decimal number to a 4 digit binary number
-     * @param decimal   the String to be converted
-     * @return  the converted binary string.
-     */
-    private String decimalToBinary(String decimal) {
-        String binary = "";
-        int remainder;
-        int dec = Integer.parseInt(decimal);
-
-        if (dec == 0) { return "0000";}
-
-        while (dec != 0) {
-          remainder = dec % 2;
-          dec = dec / 2;
-          binary = remainder + binary;
-        }
-
-        // Pads nibble with appropriate number of 0's
-        while (binary.length() < 4) {
-            binary = "0" + binary;
-        }
-
-        return binary;
-    }
 
     /**
      * Method to light the cirlces in the hours columns
@@ -360,38 +347,46 @@ public class MainActivity extends AppCompatActivity implements Runnable {
        SimpleDateFormat hours24Sdf = new SimpleDateFormat("HH");
        SimpleDateFormat minutesSdf = new SimpleDateFormat("mm");
        SimpleDateFormat secondsSdf = new SimpleDateFormat("ss");
-       // TODO: Delete following line. Not used(probably)
-       SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss");
        Date currentTime;
 
        // Digital clock variable declarations
        TextView digitalHour;
        TextView digitalMinute;
        TextView digitalSecond;
-       TextClock textClock;
 
        // Pulls the current time
        currentTime = Calendar.getInstance().getTime();
 
        // TODO: Clock set texts
 
-       // TODO: ADD 24 HOUR FUNCTIONALITY
        // Pulls each digit from the current hour, minute, and second as integers
-       hourTens = Integer.toString(Integer.parseInt((hours12Sdf.format(currentTime.getTime()))) / 10);
-       hourOnes = Integer.toString(Integer.parseInt((hours12Sdf.format(currentTime.getTime()))) % 10);
+       // Checks the clock format before pulling the hour integer
+       if (!formatToggle) {
+           hourTens = Integer.toString(Integer.parseInt((hours12Sdf.format(currentTime.getTime()))) / 10);
+           hourOnes = Integer.toString(Integer.parseInt((hours12Sdf.format(currentTime.getTime()))) % 10);
+       }
+       else {
+           hourTens = Integer.toString(Integer.parseInt((hours24Sdf.format(currentTime.getTime()))) / 10);
+           hourOnes = Integer.toString(Integer.parseInt((hours24Sdf.format(currentTime.getTime()))) % 10);
+       }
        minuteTens = Integer.toString(Integer.parseInt((minutesSdf.format(currentTime.getTime()))) / 10);
        minuteOnes = Integer.toString(Integer.parseInt((minutesSdf.format(currentTime.getTime()))) % 10);
        secondTens = Integer.toString(Integer.parseInt((secondsSdf.format(currentTime.getTime()))) / 10);
        secondOnes = Integer.toString(Integer.parseInt((secondsSdf.format(currentTime.getTime()))) % 10);
 
         // Updates objects to their corresponding views
-        textClock = findViewById(R.id.textClock);
         digitalHour = findViewById(R.id.hour);
         digitalMinute = findViewById(R.id.minute);
         digitalSecond = findViewById(R.id.second);
 
         // Sets the digital clock text views
-        digitalHour.setText(hours12Sdf.format(currentTime.getTime()) + ":");
+       if (!formatToggle) {
+           digitalHour.setText(hours12Sdf.format(currentTime.getTime()) + ":");
+       }
+       else if (formatToggle) {
+           digitalHour.setText(hours24Sdf.format(currentTime.getTime()) + ":");
+
+       }
         digitalMinute.setText(minutesSdf.format(currentTime.getTime()) + ":");
         digitalSecond.setText(secondsSdf.format(currentTime.getTime()) + " ");
 

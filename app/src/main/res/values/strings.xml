@@ -2,4 +2,6 @@
     <string name="app_name">Binary Clock</string>
     <string name="toggle_digital_on">Toggle digital clock on</string>
     <string name="toggle_digital_off">Toggle digital clock off</string>
+    <string name="toggle_12_hour">12 hour format clock</string>
+    <string name="toggle_24_hour">24 hour format clock</string>
 </resources>

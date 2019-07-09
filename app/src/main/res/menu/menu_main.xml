@@ -12,4 +12,16 @@
         android:orderInCategory="100"
         android:title="@string/toggle_digital_on"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/toggle_12"
+        android:orderInCategory="100"
+        android:title="@string/toggle_12_hour"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/toggle_24"
+        android:orderInCategory="100"
+        android:title="@string/toggle_24_hour"
+        app:showAsAction="never" />
 </menu>
